@@ -70,8 +70,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         DatabaseManager.shared.userExists(with: email, completion: {exists in
             if !exists{
+                
+                let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)
                 // insert database
-                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email))
+                DatabaseManager.shared.insertUser(with: chatUser) { (success) in
+                    if success {
+                        // upload image
+                        if user.profile.hasImage{
+                            guard let url = user.profile.imageURL(withDimension: 200) else {
+                                return
+                            }
+                            URLSession.shared.dataTask(with: url) { (data, _, _) in
+                                guard let data = data else { return }
+                                
+                                let filename = chatUser.profilePictureFilename
+                                StorageManager.shared.uploadProfilePicture(with: data, filename: filename, completion: { result in
+                                    switch result {
+                                    case .success(let downloadURL):
+                                        UserDefaults.standard.set(downloadURL, forKey: "profile_picture_url")
+                                        print(downloadURL)
+                                    case .failure(let error):
+                                        print("Storage manager error : \(error)")
+                                    }
+                                    
+                                    
+                                })
+                                
+                            }.resume()
+                            
+                          
+                        }
+                       
+                        
+                      
+                    }
+                    
+                }
             }
             
             

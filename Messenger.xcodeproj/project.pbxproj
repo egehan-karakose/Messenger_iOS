@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		32632A2D6800B84D9E0EB04C /* Pods_Messenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7AC995D4552AD88A2993ED1 /* Pods_Messenger.framework */; };
+		D883FB83259762F100E58751 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D883FB82259762F100E58751 /* ChatViewController.swift */; };
 		D89036C02595FF23005393C5 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89036BF2595FF23005393C5 /* DatabaseManager.swift */; };
 		D8B87C872594BFDC009DBBD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D8B87C862594BFDC009DBBD3 /* GoogleService-Info.plist */; };
 		D8C85ACA25935CE100DF2AD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C85AC925935CE100DF2AD6 /* AppDelegate.swift */; };
@@ -29,6 +30,7 @@
 		27EDE99A1DC60DFB73F60BE3 /* Pods-Messenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.release.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.release.xcconfig"; sourceTree = "<group>"; };
 		7AFD548DF692A5248DABBA7D /* Pods-Messenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.debug.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.debug.xcconfig"; sourceTree = "<group>"; };
 		A7AC995D4552AD88A2993ED1 /* Pods_Messenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D883FB82259762F100E58751 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		D89036BF2595FF23005393C5 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		D8B87C862594BFDC009DBBD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D8C85AC625935CE100DF2AD6 /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +120,7 @@
 				D8C85AF225935FE200DF2AD6 /* VideoPlayerViewController.swift */,
 				D8C85AF52593600300DF2AD6 /* NewConversationViewController.swift */,
 				D8C85AF82593601000DF2AD6 /* ProfileViewController.swift */,
+				D883FB82259762F100E58751 /* ChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8C85AEA25935F9E00DF2AD6 /* LoginViewController.swift in Sources */,
+				D883FB83259762F100E58751 /* ChatViewController.swift in Sources */,
 				D89036C02595FF23005393C5 /* DatabaseManager.swift in Sources */,
 				D8C85AED25935FAE00DF2AD6 /* RegisterViewController.swift in Sources */,
 				D8CFBB272594AC8600F88C8C /* Extentions.swift in Sources */,

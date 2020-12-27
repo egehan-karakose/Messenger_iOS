@@ -237,7 +237,7 @@ class RegisterViewController: UIViewController {
                 strongSelf.spinner.dismiss()
             }
             
-            guard exist else {
+            guard !exist else {
                 strongSelf.alertUserLoginError(message: "Look like a user account for that email address already exists.")
                 return
             }

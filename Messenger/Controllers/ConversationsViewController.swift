@@ -11,6 +11,8 @@ import JGProgressHUD
 
 class ConversationsViewController: UIViewController {
     
+    
+    
     private let spinner = JGProgressHUD(style: .dark)
     
     
@@ -35,7 +37,7 @@ class ConversationsViewController: UIViewController {
         return label
         
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(didTapComposeButton))
@@ -56,14 +58,33 @@ class ConversationsViewController: UIViewController {
         super.viewDidAppear(animated)
         validateAuth()
         
-       
+        
     }
     
     @objc private func didTapComposeButton(){
         
         let vc = NewConversationViewController()
+        
+        
+        vc.completion = {[weak self] result in
+            self?.createNewConversation(result: result)
+        }
+        
         let navVC = UINavigationController(rootViewController: vc)
         present(navVC, animated: true)
+    }
+    
+    private func createNewConversation(result: [String: String]) {
+        guard let name = result["name"],
+              let email = result["email"] else {
+            return
+        }
+        
+        let vc = ChatViewController(with: email)
+        vc.isNewConversation = true
+        vc.title = name
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -87,8 +108,8 @@ class ConversationsViewController: UIViewController {
         tableView.isHidden = false
         
     }
-
-
+    
+    
 }
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource{
@@ -111,12 +132,13 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = ChatViewController()
+        
+        let vc = ChatViewController(with: "asddasd")
         vc.title = "Jenny Smith"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
         
     }
-
+    
 }
 

@@ -66,8 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
         
         UserDefaults.standard.set(email, forKey: "email")
-        
-        
+        UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
         
         DatabaseManager.shared.userExists(with: email, completion: {exists in
             if !exists{
@@ -93,23 +92,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                     case .failure(let error):
                                         print("Storage manager error : \(error)")
                                     }
-                                    
-                                    
                                 })
-                                
                             }.resume()
-                            
-                          
                         }
-                       
-                        
-                      
                     }
-                    
                 }
             }
-            
-            
+
         })
         
         

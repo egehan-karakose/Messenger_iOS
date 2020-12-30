@@ -49,7 +49,7 @@ class ConversationsViewController: UIViewController {
         let label = UILabel()
         label.text = "No Conversation"
         label.textAlignment = .center
-        label.textColor = .gray
+        label.textColor = .white
         label.font = .systemFont(ofSize: 21, weight: .medium)
         label.isHidden = true
         return label
@@ -61,15 +61,17 @@ class ConversationsViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(didTapComposeButton))
         view.addSubview(tableView)
         view.addSubview(noConversationsLabel)
+        startListeningForConversations()
         setupTableView()
         fetchConversations()
-        startListeningForConversations()
         
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+        noConversationsLabel.frame = CGRect(x: 0, y: 0, width: view.width/2, height: view.height/4)
+        noConversationsLabel.center = view.center
     }
     
     
@@ -145,8 +147,10 @@ class ConversationsViewController: UIViewController {
     }
     
     private func fetchConversations(){
-        tableView.isHidden = false
-        
+
+            tableView.isHidden = false
+    
+
     }
     
     
@@ -156,6 +160,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         
         return conversations.count
     }

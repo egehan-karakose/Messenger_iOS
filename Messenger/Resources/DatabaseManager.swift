@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseDatabase
+import MessageKit
 
 
 
@@ -263,7 +264,7 @@ extension DatabaseManager{
                 if var conversations = snapshot.value as? [[String: Any]] {
                     // append
                     conversations.append(recipient_newConversationData)
-                    self?.database.child("\(safeOtherUserEmail)/conversations").setValue(conversationId)
+                    self?.database.child("\(safeOtherUserEmail)/conversations").setValue(conversations)
                 }else {
                     // create
                     self?.database.child("\(safeOtherUserEmail)/conversations").setValue([recipient_newConversationData])
@@ -431,7 +432,9 @@ extension DatabaseManager{
                 completion(.failure(DatabaseError.failedToFetch))
                 return
             }
-            let messages: [Message] = value.compactMap { (dictionary) in
+            
+            
+            let messages: [Message] = value.compactMap { dictionary in
                 guard let name = dictionary["name"] as? String,
                       let isRead = dictionary["is_read"] as? Bool,
                       let content = dictionary["content"] as? String,
@@ -440,26 +443,51 @@ extension DatabaseManager{
                       let dateString = dictionary["date"] as? String,
                       let type = dictionary["type"] as? String,
                       let date = ChatViewController.dateFormatter.date(from: dateString)
-                
                 else {
+                    print("returned nil")
                     return nil
                 }
                 
                 
-                let sender = Sender(photoURL: "", senderId: senderEmail, displayName: name)
-                return Message(sender: sender, messageId: messageID, sentDate: date, kind: .text(content))
+                
+                var kind : MessageKind?
+
+                if type == "photo" {
+                    // photo
+                    guard let imageURL = URL(string: content),
+                          let placeholder = UIImage(systemName: "plus")
+
+                    else {
+                        return nil
+                    }
+                    let media = Media(url: imageURL, image: nil, placeholderImage: placeholder, size: CGSize(width: 300, height: 300))
+                    kind = .photo(media)
+
+                }else{
+                    kind = .text(content)
+
+                }
+
+                guard let finalKind = kind else {
+                    return nil
+                }
+
+
+                let sender = Sender(photoURL: "",
+                                    senderId: senderEmail,
+                                    displayName: name)
+                
+                 return Message(sender: sender,
+                                   messageId: messageID,
+                                   sentDate: date,
+                                   kind: finalKind)
+                
                 
                 
             }
             
             completion(.success(messages))
-        }
-        
-        
-        
-        
-        
-        
+        }        
     }
     
     /// Sends a message with target conversation and message
@@ -467,10 +495,6 @@ extension DatabaseManager{
         //add new message to messages
         //update sender latest message
         //update recepient latest message
-        
-        
-        
-        
         
         database.child("\(conversation)/messages").observeSingleEvent(of: .value) {[weak self] (snapshot) in
             
@@ -487,9 +511,13 @@ extension DatabaseManager{
             
             case .text(let messageText):
                 message = messageText
+                break
             case .attributedText(_):
                 break
-            case .photo(_):
+            case .photo(let mediaItem):
+                if let targetURL = mediaItem.url?.absoluteString{
+                    message = targetURL
+                }
                 break
             case .video(_):
                 break
@@ -545,7 +573,7 @@ extension DatabaseManager{
                         "date":dateString,
                         "message": message,
                         "is_read": false
-                    
+                        
                     ]
                     
                     var targetConversation : [String: Any]?
@@ -587,7 +615,7 @@ extension DatabaseManager{
                                 "date":dateString,
                                 "message": message,
                                 "is_read": false
-                            
+                                
                             ]
                             
                             var targetConversation : [String: Any]?

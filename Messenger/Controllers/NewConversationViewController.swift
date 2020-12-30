@@ -29,6 +29,7 @@ class NewConversationViewController: UIViewController {
     
     private let tableView : UITableView = {
         let table = UITableView()
+        table.separatorStyle = .none
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.isHidden = true
         return table
@@ -57,7 +58,7 @@ class NewConversationViewController: UIViewController {
         
         searchBar.delegate = self
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         navigationController?.navigationBar.topItem?.titleView = searchBar
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(dismissSelf))
         

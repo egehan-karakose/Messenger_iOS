@@ -82,6 +82,7 @@ extension DatabaseManager{
                 if var usersCollections = snapshot.value as? [[String: String]] {
                     // append to user dictionary
                     
+                    
                     let newElement =  ["name" : user.firstName + " " + user.lastName,
                                        "email": user.emailAddress]
                     usersCollections.append(newElement)
@@ -463,6 +464,17 @@ extension DatabaseManager{
                     let media = Media(url: imageURL, image: nil, placeholderImage: placeholder, size: CGSize(width: 300, height: 300))
                     kind = .photo(media)
 
+                }else if type == "video" {
+                    // photo
+                    guard let videoURL = URL(string: content),
+                          let placeholder = UIImage(named: "video_placeholder")
+
+                    else {
+                        return nil
+                    }
+                    let media = Media(url: videoURL, image: nil, placeholderImage: placeholder, size: CGSize(width: 300, height: 300))
+                    kind = .video(media)
+
                 }else{
                     kind = .text(content)
 
@@ -511,7 +523,6 @@ extension DatabaseManager{
             
             case .text(let messageText):
                 message = messageText
-                break
             case .attributedText(_):
                 break
             case .photo(let mediaItem):
@@ -519,7 +530,10 @@ extension DatabaseManager{
                     message = targetURL
                 }
                 break
-            case .video(_):
+            case .video(let mediaItem):
+                if let targetURL = mediaItem.url?.absoluteString{
+                    message = targetURL
+                }
                 break
             case .location(_):
                 break
@@ -651,6 +665,45 @@ extension DatabaseManager{
             }
         }
     }
+    public func deleteConversation(conversationId : String, completion : @escaping (Bool) -> Void){
+        guard let email = UserDefaults.standard.value(forKey:"email") as? String else {
+            return
+        }
+        
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        
+        // Get all conversation for current user
+        // delete conversation in collection with target id
+        // reset those conversation for the user in database
+        let ref = database.child("\(safeEmail)/conversations")
+            
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if var conversations = snapshot.value as? [[String: Any]] {
+                var positionToRemove = 0
+                for conversation in conversations{
+                    if let id = conversation["id"] as? String,
+                       id == conversationId {
+                        break
+                    }
+                    positionToRemove += 1
+                }
+                conversations.remove(at: positionToRemove)
+                ref.setValue(conversations) { (error, _) in
+                    guard error == nil else{
+                        completion(false)
+                        print("failed to write updated conversation")
+                        return
+                    }
+                    print("conversation deleted")
+                    completion(true)
+                }
+            }
+        }
+        
+        
+    }
+    
+    
 }
 
 

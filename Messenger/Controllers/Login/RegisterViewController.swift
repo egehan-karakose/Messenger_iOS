@@ -249,6 +249,7 @@ class RegisterViewController: UIViewController {
                     return
                 }
                 
+                
                 let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)
                 
                 DatabaseManager.shared.insertUser(with: chatUser) { (success) in

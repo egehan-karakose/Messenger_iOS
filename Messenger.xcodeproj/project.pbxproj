@@ -26,6 +26,7 @@
 		D8C85AF62593600300DF2AD6 /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C85AF52593600300DF2AD6 /* NewConversationViewController.swift */; };
 		D8C85AF92593601000DF2AD6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C85AF82593601000DF2AD6 /* ProfileViewController.swift */; };
 		D8CFBB272594AC8600F88C8C /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CFBB262594AC8600F88C8C /* Extentions.swift */; };
+		D8E62180259E060300A5BDB8 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E6217F259E060300A5BDB8 /* NewConversationCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		D8C85AF52593600300DF2AD6 /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		D8C85AF82593601000DF2AD6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D8CFBB262594AC8600F88C8C /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
+		D8E6217F259E060300A5BDB8 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				D8C85AE425935EBD00DF2AD6 /* Storyboards */,
 				D8C85AD225935CE500DF2AD6 /* Assets.xcassets */,
 				D85038C4259B2FC600D03CD0 /* ConversationTableViewCell.swift */,
+				D8E6217F259E060300A5BDB8 /* NewConversationCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8C85AEA25935F9E00DF2AD6 /* LoginViewController.swift in Sources */,
+				D8E62180259E060300A5BDB8 /* NewConversationCell.swift in Sources */,
 				D883FB83259762F100E58751 /* ChatViewController.swift in Sources */,
 				D89036C02595FF23005393C5 /* DatabaseManager.swift in Sources */,
 				D8C85AED25935FAE00DF2AD6 /* RegisterViewController.swift in Sources */,
